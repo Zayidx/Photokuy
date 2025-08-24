@@ -34,7 +34,7 @@ class ReviewPhotos extends Component
             return $this->redirect(route('photobooth.select'));
         }
         $this->photoUrls = array_map(function ($rel) {
-            return Storage::url($rel);
+            return Storage::disk('public')->url($rel);
         }, $this->photos);
         $settings = session('photobooth_settings', []);
         $this->countdown = $settings['countdown'] ?? 3;
@@ -64,7 +64,7 @@ class ReviewPhotos extends Component
 
         // Update arrays and session
         $this->photos[$index] = $newFilename;
-        $this->photoUrls[$index] = Storage::url($newFilename);
+        $this->photoUrls[$index] = Storage::disk('public')->url($newFilename);
         session(['photobooth_captures' => $this->photos]);
         $this->dispatch('toast', message: 'Photo updated');
     }
@@ -136,7 +136,7 @@ class ReviewPhotos extends Component
         foreach ($paths as $p) { if (is_file($p)) { @unlink($p); } }
         session()->forget('photobooth_captures');
 
-        $this->finalStripUrl = Storage::url($finalFileName);
+        $this->finalStripUrl = Storage::disk('public')->url($finalFileName);
 
         if (config('photobooth.email_enabled')) {
             $this->step = 'finalizing';

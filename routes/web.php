@@ -61,7 +61,8 @@ Route::get('/photo/{filename}', function ($filename) {
         }
     }
 
-    $photoUrl = Storage::url($path);
+    // Use public disk to build the URL consistently in all environments
+    $photoUrl = Storage::disk('public')->url($path);
 
     return view('photo', ['photoUrl' => $photoUrl]);
 })->name('photo.view');

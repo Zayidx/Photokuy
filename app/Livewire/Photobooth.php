@@ -162,7 +162,8 @@ class Photobooth extends Component
             }
         }
 
-        $this->finalStripUrl = Storage::url($finalFileName);
+        // Always generate URL from the public disk to avoid relying on default disk
+        $this->finalStripUrl = Storage::disk('public')->url($finalFileName);
         if (config('photobooth.email_enabled')) {
             $this->step = 'sending_email';
         } else {
