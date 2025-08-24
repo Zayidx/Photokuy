@@ -10,7 +10,26 @@ use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Storage;
 
 Route::get('/', function () {
-    return view('welcome');
+    // Collect recent photobooth photos from public storage (strips first, then photos)
+    $disk = Storage::disk('public');
+    $candidates = [];
+    foreach (['strips', 'photos'] as $dir) {
+        if ($disk->exists($dir)) {
+            foreach ($disk->files($dir) as $file) {
+                if (preg_match('/\.(jpg|jpeg|png)$/i', $file)) {
+                    $path = $disk->path($file);
+                    $mtime = @filemtime($path) ?: 0;
+                    $candidates[] = ['file' => $file, 'mtime' => $mtime];
+                }
+            }
+        }
+    }
+    // Sort by modified time, newest first, and limit
+    usort($candidates, fn($a,$b) => $b['mtime'] <=> $a['mtime']);
+    $candidates = array_slice($candidates, 0, 20);
+    $bgPhotos = array_map(fn($it) => $disk->url($it['file']), $candidates);
+
+    return view('welcome', ['bgPhotos' => $bgPhotos]);
 });
 
 // Step 1: Email Input

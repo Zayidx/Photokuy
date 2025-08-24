@@ -6,7 +6,8 @@ use Illuminate\Support\Facades\Log;
 use Livewire\Component;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
-use Resend;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\SendEmail;
 use Throwable;
 
 class Photobooth extends Component
@@ -185,32 +186,17 @@ class Photobooth extends Component
         }
         if ($email) {
             try {
-                $apiKey = env('RESEND_API_KEY');
-                if (empty($apiKey)) {
-                    Log::warning('RESEND_API_KEY missing; skipping email dispatch');
-                } else {
-                    $resend = Resend::client($apiKey);
-                }
                 $downloadUrl = route('photo.view', ['filename' => basename($this->finalStripUrl)]);
                 $photoUrl = url($this->finalStripUrl);
-
-                $htmlContent = "<h1>Here's Your Photo Strip!</h1><p>Thanks for using our photobooth. Click the image or the button below to see and download your photo.</p><a href='{$downloadUrl}'><img src='{$photoUrl}' alt='Your Photo Strip' style='max-width: 100%;'></a><br><a href='{$downloadUrl}' style='display: inline-block; padding: 12px 25px; margin: 20px 0; background-color: #007bff; color: #ffffff; text-decoration: none; border-radius: 5px;'>View & Download</a>";
-
-                if (!empty($apiKey)) {
-                    $resend->emails->send([
-                        'from' => 'Photobooth <onboarding@resend.dev>',
-                        'to' => $email,
-                        'subject' => 'Your Photobooth Photo Strip!',
-                        'html' => $htmlContent,
-                    ]);
-                    Log::info('Resend SDK send command executed successfully for: ' . $email);
-                    $this->dispatch('toast', message: 'Email sent');
-                } else {
-                    $this->dispatch('toast', message: 'Photo ready to download');
-                }
-
+                Mail::to($email)->send(new SendEmail(
+                    subject: 'Your Photobooth Photo Strip!',
+                    view: 'mail.photobooth',
+                    data: compact('downloadUrl', 'photoUrl')
+                ));
+                Log::info('Mail sent via Laravel mailer to: ' . $email);
+                $this->dispatch('toast', message: 'Email sent');
             } catch (Throwable $e) {
-                Log::error('Photobooth email failed to send via Resend: ' . $e->getMessage());
+                Log::error('Photobooth email failed to send: ' . $e->getMessage());
                 $this->dispatch('toast', message: 'Could not send email');
             } finally {
                 session()->forget('photobooth_email');

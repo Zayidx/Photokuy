@@ -197,7 +197,7 @@ document.addEventListener('livewire:init', () => {
                 @if(!config('photobooth.email_enabled'))
                     <li>Email is disabled (QR-only mode). Admin can enable via <code>PHOTOBOOTH_EMAIL_ENABLED=true</code>.</li>
                 @else
-                    <li>Emails use Resend. Set <code>RESEND_API_KEY</code> in <code>.env</code>.</li>
+                    <li>Emails use Laravel Mail (SMTP). Configure <code>MAIL_*</code> in <code>.env</code>.</li>
                 @endif
             </ul>
         </div>
