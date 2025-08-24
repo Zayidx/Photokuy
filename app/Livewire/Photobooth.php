@@ -37,6 +37,7 @@ class Photobooth extends Component
             return redirect()->route('photobooth.select');
         }
         $this->layout = $layout;
+        session(['photobooth_layout' => $layout]);
         $this->totalCaptures = $this->layouts[$layout]['total'];
 
         $settings = session('photobooth_settings', []);
@@ -68,11 +69,17 @@ class Photobooth extends Component
             return;
         }
 
+        // Track in-memory for this component
         $this->photos[] = Storage::disk('public')->path($filename);
+        // Also persist relative filename to session so a review component can load them later
+        $sessionPhotos = (array) session('photobooth_captures', []);
+        $sessionPhotos[] = $filename; // store relative path within public disk
+        session(['photobooth_captures' => $sessionPhotos]);
         $this->captureCount++;
 
         if ($this->captureCount >= $this->totalCaptures) {
-            $this->processStrip();
+            // Defer processing to the review component
+            return $this->redirect(route('photobooth.review'), navigate: true);
         }
     }
 

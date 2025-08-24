@@ -1,11 +1,12 @@
-
 <div>
-    <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        /* Custom CSS for the Pink Photobooth Theme */
+        /* Reusing the same font import */
+        @import url('https://fonts.googleapis.com/css2?family=Pacifico&family=Poppins:wght@400;600;700&display=swap');
+
+        /* Custom CSS for the Orange Photobooth Theme */
         .photobooth-body {
             font-family: 'Poppins', sans-serif;
-            background: linear-gradient(135deg, #FFC0CB, #F8BBD0); /* Soft pink gradient background */
+            background: linear-gradient(135deg, #FDBA74, #FB923C); /* Warm orange gradient background */
             display: flex;
             justify-content: center;
             align-items: center;
@@ -35,13 +36,14 @@
         }
 
         .settings-panel {
-            width: 280px;
+            flex-basis: 280px;
+            flex-grow: 0;
         }
 
         /* Use the fun, cursive font for headings */
         h2, h3 {
             font-family: 'Pacifico', cursive;
-            color: #E91E63; /* Hot Pink */
+            color: #C2410C; /* Dark Orange */
             margin-bottom: 1.5rem;
             text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
         }
@@ -74,7 +76,7 @@
             display: block;
             margin-bottom: 0.75rem;
             font-weight: 600;
-            color: #AD1457; /* Darker Pink */
+            color: #9A3412; /* Darker Orange */
         }
 
         /* Custom styling for select dropdown */
@@ -82,13 +84,13 @@
             width: 100%;
             padding: 12px;
             border-radius: 10px;
-            border: 2px solid #F48FB1;
+            border: 2px solid #FDBA74; /* Light Orange */
             font-size: 1rem;
             cursor: pointer;
             background-color: #fff;
             color: #333;
             appearance: none; /* Remove default arrow */
-            background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%23AD1457' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3e%3c/svg%3e");
+            background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%239A3412' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3e%3c/svg%3e");
             background-position: right 0.5rem center;
             background-repeat: no-repeat;
             background-size: 1.5em 1.5em;
@@ -96,8 +98,8 @@
         }
         .setting-group select:focus {
             outline: none;
-            border-color: #E91E63;
-            box-shadow: 0 0 0 3px rgba(233, 30, 99, 0.2);
+            border-color: #EA580C; /* Main Orange */
+            box-shadow: 0 0 0 3px rgba(234, 88, 12, 0.2);
         }
 
         /* Filter buttons styling */
@@ -109,21 +111,21 @@
         .filter-buttons button {
             padding: 10px;
             border-radius: 10px;
-            border: 2px solid #F48FB1;
+            border: 2px solid #FDBA74; /* Light Orange */
             font-size: 0.9rem;
             font-weight: 600;
             cursor: pointer;
             background-color: #fff;
-            color: #AD1457;
+            color: #9A3412; /* Darker Orange */
             transition: all 0.2s ease-in-out;
         }
         .filter-buttons button:hover {
-            background-color: #FCE4EC; /* Light pink hover */
+            background-color: #FFF7ED; /* Very Light Orange hover */
         }
         .filter-buttons button.active {
-            background-color: #E91E63;
+            background-color: #EA580C; /* Main Orange */
             color: white;
-            border-color: #E91E63;
+            border-color: #EA580C;
             transform: scale(1.05);
         }
 
@@ -135,7 +137,7 @@
         }
         .toggle-switch .toggle-label {
             font-weight: 600;
-            color: #AD1457;
+            color: #9A3412; /* Darker Orange */
         }
         .toggle-switch .switch {
             position: relative;
@@ -155,7 +157,7 @@
             left: 0;
             right: 0;
             bottom: 0;
-            background-color: #F48FB1;
+            background-color: #FDBA74; /* Light Orange */
             transition: .4s;
             border-radius: 34px;
         }
@@ -171,7 +173,7 @@
             border-radius: 50%;
         }
         .toggle-switch input:checked + .slider {
-            background-color: #E91E63;
+            background-color: #EA580C; /* Main Orange */
         }
         .toggle-switch input:checked + .slider:before {
             transform: translateX(26px);
@@ -180,7 +182,7 @@
 
         /* Main Action Button */
         .action-button {
-            background: linear-gradient(45deg, #EC407A, #D81B60);
+            background: linear-gradient(45deg, #F97316, #EA580C);
             color: white;
             border: none;
             padding: 18px 25px;
@@ -190,13 +192,13 @@
             border-radius: 15px;
             cursor: pointer;
             margin-top: 1rem;
-            box-shadow: 0 4px 15px rgba(233, 30, 99, 0.4);
+            box-shadow: 0 4px 15px rgba(234, 88, 12, 0.4);
             transition: all 0.3s ease;
             letter-spacing: 1px;
         }
         .action-button:hover {
             transform: translateY(-3px);
-            box-shadow: 0 6px 20px rgba(233, 30, 99, 0.6);
+            box-shadow: 0 6px 20px rgba(234, 88, 12, 0.6);
         }
 
         /* CSS classes for camera effects */
@@ -213,17 +215,15 @@
             }
             .settings-panel {
                 width: 100%;
-                padding-left: 0;
-                border-left: none;
+                flex-basis: auto;
             }
         }
     </style>
 
-    <!-- The main component is wrapped in a body-like div for styling -->
     <div class="photobooth-body">
         <div class="photobooth-container">
             <div class="camera-preview">
-                <h2 class="font-black text-3xl md:text-4xl text-rose-600">Photobooth Fun!</h2>
+                <h2>Photobooth Fun!</h2>
                 <div id="camera-wrapper">
                     <video id="camera" autoplay muted playsinline
                         @class([
@@ -236,12 +236,16 @@
                 </div>
             </div>
             <div class="settings-panel">
-                <h3 class="text-rose-800/80 text-2xl font-semibold">Settings</h3>
+                <h3>Settings</h3>
                 <div class="setting-group">
                     <label for="camera-select">Camera</label>
-                    <select id="camera-select">
-                        <option value="">Default (Auto)</option>
-                    </select>
+                    <div style="display:flex;gap:8px;align-items:center;">
+                        <select id="camera-select">
+                            <option value="">Default (Auto)</option>
+                        </select>
+                        <button type="button" id="camera-refresh" title="Refresh devices" style="padding:6px 10px;border-radius:8px;border:1px solid #EA580C;background:#FFF7ED;color:#9A3412;">Refresh</button>
+                    </div>
+                    <small id="camera-hint" style="display:block;color:#6b7280;margin-top:6px;">Jika OBS Virtual Camera belum muncul, jalankan "Start Virtual Camera" di OBS, beri izin kamera di browser, lalu klik Refresh.</small>
                 </div>
                 <div class="setting-group">
                     <label for="countdown">Countdown</label>
@@ -254,7 +258,6 @@
                 <div class="setting-group">
                     <div class="toggle-switch">
                         <span class="toggle-label">Mirror Mode</span>
-                        <!-- Custom toggle switch for a better UX -->
                         <label class="switch" for="mirrorModeToggle">
                             <input type="checkbox" id="mirrorModeToggle" wire:click="$toggle('mirrorMode')" {{ $mirrorMode ? 'checked' : '' }}>
                             <span class="slider"></span>
@@ -272,7 +275,7 @@
                         @endforeach
                     </div>
                 </div>
-                <hr style="border-color: #F8BBD0; margin: 2rem 0;">
+                <hr style="border-color: #FDBA74; margin: 2rem 0;">
                 <button wire:click="startShooting" wire:loading.attr="disabled" wire:target="startShooting" class="action-button disabled:opacity-70 disabled:cursor-not-allowed">
                     <span wire:loading.remove wire:target="startShooting">Start Shooting</span>
                     <span wire:loading wire:target="startShooting">Starting…</span>
@@ -288,9 +291,11 @@
                 const video = document.getElementById('camera');
                 if (!video) return;
                 const select = document.getElementById('camera-select');
+                const hint = document.getElementById('camera-hint');
+                function setHint(msg){ if(hint) hint.textContent = msg; }
                 let stream;
                 const storedId = @json($cameraDeviceId ?? null);
-                const constraints = storedId ? { video: { deviceId: { exact: storedId } }, audio: false } : { video: { facingMode: 'user' }, audio: false };
+                const constraints = storedId ? { video: { deviceId: { exact: storedId } }, audio: false } : { video: true, audio: false };
                 navigator.mediaDevices.getUserMedia(constraints)
                     .then(s => {
                         stream = s;
@@ -300,14 +305,21 @@
                         if (playPromise && typeof playPromise.then === 'function') {
                             playPromise.catch(()=>{});
                         }
-                        // Populate device list after permission granted
                         return navigator.mediaDevices.enumerateDevices();
                     })
                     .then(devices => {
                         if (!select) return;
                         const current = storedId;
                         select.innerHTML = '<option value="">Default (Auto)</option>';
-                        devices.filter(d => d.kind === 'videoinput').forEach(d => {
+                        const videoInputs = devices.filter(d => d.kind === 'videoinput' && d.deviceId && !/^default$|^communications$/.test(d.deviceId));
+                        videoInputs.sort((a,b) => {
+                            const av = /obs|virtual/i.test(a.label);
+                            const bv = /obs|virtual/i.test(b.label);
+                            if (av && !bv) return -1;
+                            if (!av && bv) return 1;
+                            return (a.label||'').localeCompare(b.label||'');
+                        });
+                        videoInputs.forEach(d => {
                             const opt = document.createElement('option');
                             opt.value = d.deviceId;
                             const name = d.label || 'Camera';
@@ -316,10 +328,51 @@
                             if (current && d.deviceId === current) opt.selected = true;
                             select.appendChild(opt);
                         });
+                        if (!current) {
+                            const obs = Array.from(select.options).find(o => /obs/i.test(o.textContent));
+                            if (obs && obs.value) {
+                                obs.selected = true;
+                                select.dispatchEvent(new Event('change'));
+                            }
+                        }
                     })
-                    .catch(err => {
-                        console.error("Error accessing camera: ", err);
-                        alert('Could not access the camera. Please allow camera access and refresh the page.');
+                    .catch(async err => {
+                        console.error("Error accessing camera (first attempt): ", err);
+                        try {
+                            const s = await navigator.mediaDevices.getUserMedia({ video: true, audio: false });
+                            stream = s;
+                            video.srcObject = stream;
+                            await video.play?.();
+                        } catch (e2) {
+                            console.warn('Fallback getUserMedia failed:', e2);
+                        }
+                        try {
+                            const devices = await navigator.mediaDevices.enumerateDevices();
+                            if (select) {
+                                const current = storedId;
+                                select.innerHTML = '<option value="">Default (Auto)</option>';
+                                const videoInputs = devices.filter(d => d.kind === 'videoinput');
+                                videoInputs.sort((a,b) => {
+                                    const av = /obs|virtual/i.test(a.label);
+                                    const bv = /obs|virtual/i.test(b.label);
+                                    if (av && !bv) return -1;
+                                    if (!av && bv) return 1;
+                                    return (a.label||'').localeCompare(b.label||'');
+                                });
+                                videoInputs.forEach(d => {
+                                    const opt = document.createElement('option');
+                                    opt.value = d.deviceId;
+                                    const name = d.label || 'Camera';
+                                    const isVirtual = /virtual|obs|snap|manycam|xsplit/i.test(name);
+                                    opt.textContent = isVirtual ? `${name} (Virtual)` : name;
+                                    if (current && d.deviceId === current) opt.selected = true;
+                                    select.appendChild(opt);
+                                });
+                            }
+                        } catch (e3) {
+                            console.warn('enumerateDevices failed after fallback:', e3);
+                        }
+                        setHint('Tidak dapat mengakses kamera. Pastikan izin kamera diberikan dan tidak digunakan aplikasi lain.');
                     });
                 document.addEventListener('livewire:navigating', () => {
                     if (stream) stream.getTracks().forEach(t=>t.stop());
@@ -327,21 +380,95 @@
 
                 if (select) {
                     select.addEventListener('change', async (e) => {
+                        const id = e.target.value || null;
+                        const candidates = [];
+                        if (id) {
+                            candidates.push({ video: { deviceId: { exact: id }, width: { ideal: 1280 }, height: { ideal: 720 }, frameRate: { ideal: 30 } }, audio: false });
+                            candidates.push({ video: { deviceId: { ideal: id }, width: { ideal: 1280 }, height: { ideal: 720 }, frameRate: { ideal: 30 } }, audio: false });
+                        }
+                        candidates.push({ video: true, audio: false });
+                        select.disabled = true; setHint('Mengganti kamera...');
                         try {
-                            const id = e.target.value || null;
-                            @this.set('cameraDeviceId', id);
-                            if (stream) stream.getTracks().forEach(t=>t.stop());
-                            const next = id ? { video: { deviceId: { exact: id } }, audio: false } : { video: { facingMode: 'user' }, audio: false };
-                            const s2 = await navigator.mediaDevices.getUserMedia(next);
-                            stream = s2;
+                            if (stream) { stream.getTracks().forEach(t=>t.stop()); stream = null; }
+                            video.srcObject = null;
+                            await new Promise(r=>setTimeout(r,200));
+                            let acquired = null, lastErr = null;
+                            for (const c of candidates) { try { acquired = await navigator.mediaDevices.getUserMedia(c); break; } catch(e){ lastErr = e; } }
+                            if (!acquired) throw lastErr || new Error('No camera available');
+                            stream = acquired;
                             video.srcObject = stream;
-                            await video.play?.();
+                            const p = video.play?.(); if (p && p.catch) p.catch(()=>{});
+                            @this.set('cameraDeviceId', id);
+                            setHint('Kamera siap.');
+                        } catch (e2) {
+                            console.error('Failed to switch camera', e2);
+                            if ((e2?.name||'')==='NotReadableError') {
+                                setHint('Kamera tidak dapat dimulai. Tutup aplikasi lain (Zoom/Discord/OBS) lalu coba lagi.');
+                            } else {
+                                setHint('Gagal mengganti kamera. Coba perangkat lain.');
+                            }
+                        } finally { select.disabled = false; }
+                    });
+                }
+
+                const refreshBtn = document.getElementById('camera-refresh');
+                if (refreshBtn && select) {
+                    refreshBtn.addEventListener('click', async () => {
+                        try {
+                            const devices = await navigator.mediaDevices.enumerateDevices();
+                            const current = select.value || null;
+                            select.innerHTML = '<option value="">Default (Auto)</option>';
+                            const videoInputs = devices.filter(d => d.kind === 'videoinput' && d.deviceId && !/^default$|^communications$/.test(d.deviceId));
+                            videoInputs.sort((a,b) => {
+                                const av = /obs|virtual/i.test(a.label);
+                                const bv = /obs|virtual/i.test(b.label);
+                                if (av && !bv) return -1;
+                                if (!av && bv) return 1;
+                                return (a.label||'').localeCompare(b.label||'');
+                            });
+                            videoInputs.forEach(d => {
+                                const opt = document.createElement('option');
+                                opt.value = d.deviceId;
+                                const name = d.label || 'Camera';
+                                const isVirtual = /virtual|obs|snap|manycam|xsplit/i.test(name);
+                                opt.textContent = isVirtual ? `${name} (Virtual)` : name;
+                                if (current && d.deviceId === current) opt.selected = true;
+                                select.appendChild(opt);
+                            });
                         } catch (e) {
-                            console.error('Failed to switch camera', e);
-                            alert('Failed to switch camera.');
+                            console.error('Failed to refresh devices', e);
+                            alert('Failed to refresh camera list.');
                         }
                     });
                 }
+                
+                try {
+                    navigator.mediaDevices.addEventListener?.('devicechange', async () => {
+                        try {
+                            const devices = await navigator.mediaDevices.enumerateDevices();
+                            const current = select?.value || null;
+                            if (!select) return;
+                            select.innerHTML = '<option value="">Default (Auto)</option>';
+                            const videoInputs = devices.filter(d => d.kind === 'videoinput' && d.deviceId && !/^default$|^communications$/.test(d.deviceId));
+                            videoInputs.sort((a,b) => {
+                                const av = /obs|virtual/i.test(a.label);
+                                const bv = /obs|virtual/i.test(b.label);
+                                if (av && !bv) return -1;
+                                if (!av && bv) return 1;
+                                return (a.label||'').localeCompare(b.label||'');
+                            });
+                            videoInputs.forEach(d => {
+                                const opt = document.createElement('option');
+                                opt.value = d.deviceId;
+                                const name = d.label || 'Camera';
+                                const isVirtual = /virtual|obs|snap|manycam|xsplit/i.test(name);
+                                opt.textContent = isVirtual ? `${name} (Virtual)` : name;
+                                if (current && d.deviceId === current) opt.selected = true;
+                                select.appendChild(opt);
+                            });
+                        } catch {}
+                    });
+                } catch {}
             }
             document.addEventListener('DOMContentLoaded', boot);
             document.addEventListener('livewire:init', boot);

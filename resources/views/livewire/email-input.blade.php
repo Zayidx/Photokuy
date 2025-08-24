@@ -1,10 +1,12 @@
-
 <div>
     <style>
-        /* Custom CSS for the Email Entry Screen with Pink Theme */
+        /* Reusing the same font import */
+        @import url('https://fonts.googleapis.com/css2?family=Pacifico&family=Poppins:wght@400;600;700&display=swap');
+
+        /* Custom CSS for the Email Entry Screen with Orange Theme */
         .photobooth-body {
             font-family: 'Poppins', sans-serif;
-            background: linear-gradient(135deg, #FFC0CB, #F8BBD0); /* Soft pink gradient background */
+            background: linear-gradient(135deg, #FDBA74, #FB923C); /* Warm orange gradient background */
             display: flex;
             justify-content: center;
             align-items: center;
@@ -25,23 +27,26 @@
             text-align: center;
         }
 
-        h1, h2 {
-            color: #333;
-        }
         h1 {
+            font-family: 'Pacifico', cursive;
             font-weight: 700;
             font-size: 2.5rem;
-            color: #E91E63; /* Hot Pink */
+            color: #C2410C; /* Dark Orange */
         }
-        h2 {
-            font-weight: 400;
+
+        p.subtitle {
             font-size: 1.2rem;
-            color: #AD1457; /* Darker Pink */
+            color: #9A3412; /* Darker Orange */
+            margin-top: 0.5rem;
             margin-bottom: 2.5rem;
         }
 
         .email-form {
             margin-top: 2rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1rem;
         }
 
         .email-form input {
@@ -49,25 +54,26 @@
             max-width: 400px;
             padding: 15px;
             font-size: 1.1rem;
-            border: 2px solid #F48FB1;
-            border-radius: 10px;
-            margin-bottom: 1rem;
+            border: 2px solid #FDBA74; /* Light Orange */
+            border-radius: 12px;
             transition: all 0.2s ease;
         }
         .email-form input:focus {
             outline: none;
-            border-color: #E91E63;
-            box-shadow: 0 0 0 3px rgba(233, 30, 99, 0.2);
+            border-color: #EA580C; /* Main Orange */
+            box-shadow: 0 0 0 3px rgba(234, 88, 12, 0.2);
         }
 
         .email-form .error {
-            color: #D32F2F; /* A more standard error red */
-            margin-bottom: 1rem;
+            color: #D32F2F;
             font-weight: 600;
+            text-align: left;
+            width: 100%;
+            max-width: 400px;
         }
 
         .action-button {
-            background: linear-gradient(45deg, #EC407A, #D81B60);
+            background: linear-gradient(45deg, #F97316, #EA580C);
             color: white;
             border: none;
             padding: 15px 30px;
@@ -75,30 +81,34 @@
             max-width: 400px;
             font-size: 1.2rem;
             font-weight: 600;
-            border-radius: 10px;
+            border-radius: 12px;
             cursor: pointer;
             transition: all 0.3s ease;
-            box-shadow: 0 4px 15px rgba(233, 30, 99, 0.4);
+            box-shadow: 0 4px 15px rgba(234, 88, 12, 0.4);
+            margin-top: 0.5rem;
         }
         .action-button:hover {
             transform: translateY(-3px);
-            box-shadow: 0 6px 20px rgba(233, 30, 99, 0.6);
+            box-shadow: 0 6px 20px rgba(234, 88, 12, 0.6);
+        }
+        .action-button:disabled {
+            opacity: 0.7;
+            cursor: not-allowed;
         }
     </style>
-    <div class="photobooth-body min-h-screen flex items-center justify-center p-8 bg-gradient-to-br from-pink-200 to-pink-100">
-        <div class="photobooth-container w-full max-w-xl mx-auto text-center rounded-2xl border border-white/20 bg-white/90 backdrop-blur shadow-2xl p-10 space-y-4">
-            <h1 class="font-black text-3xl md:text-4xl text-rose-600">Welcome to the Photobooth!</h1>
-            <p class="text-rose-800/80">Enter your email to begin</p>
-            <form wire:submit.prevent="saveEmail" class="flex flex-col items-center gap-3 mt-2 md:mt-4">
+    <div class="photobooth-body">
+        <div class="photobooth-container">
+            <h1>Welcome to the Photobooth!</h1>
+            <p class="subtitle">Enter your email to begin</p>
+            <form wire:submit.prevent="saveEmail" class="email-form">
                 <label for="email" class="sr-only">Email address</label>
-                <input id="email" type="email" wire:model.lazy="email" placeholder="your.email@example.com" required aria-label="Email address"
-                       class="w-full max-w-md rounded-xl border-2 border-pink-300 px-4 py-3 text-lg text-gray-800 placeholder:text-gray-400 focus:outline-none focus:ring-4 focus:ring-rose-200 focus:border-rose-500 transition">
+                <input id="email" type="email" wire:model.lazy="email" placeholder="your.email@example.com" required aria-label="Email address">
                 @error('email')
-                    <div class="w-full max-w-md text-left text-red-600 font-semibold" role="alert">{{ $message }}</div>
+                    <div class="error" role="alert">{{ $message }}</div>
                 @enderror
                 <button type="submit"
                         wire:loading.attr="disabled" wire:target="saveEmail"
-                        class="mt-2 w-full max-w-md rounded-xl bg-gradient-to-r from-rose-500 to-pink-600 text-white font-semibold py-3 shadow-lg hover:shadow-xl transition-transform hover:-translate-y-0.5 disabled:opacity-70 disabled:cursor-not-allowed">
+                        class="action-button">
                     <span wire:loading.remove wire:target="saveEmail">Next</span>
                     <span wire:loading wire:target="saveEmail">Processing…</span>
                 </button>

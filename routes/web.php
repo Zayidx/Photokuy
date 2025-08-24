@@ -5,6 +5,7 @@ use App\Livewire\EditFoto;
 use App\Livewire\EmailInput;
 use App\Livewire\LayoutSelector;
 use App\Livewire\Photobooth;
+use App\Livewire\ReviewPhotos;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Storage;
 
@@ -23,6 +24,9 @@ Route::get('/photobooth/{layout}/edit', EditFoto::class)->name('photobooth.edit'
 
 // Step 4: Photo Capture
 Route::get('/photobooth/{layout}/capture', Photobooth::class)->name('photobooth.capture');
+
+// Step 5: Review & Retake Selected
+Route::get('/photobooth/review', ReviewPhotos::class)->name('photobooth.review');
 
 
 

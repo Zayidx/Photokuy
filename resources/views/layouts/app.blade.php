@@ -60,11 +60,11 @@
     <!-- Livewire navigate progress -->
     <div id="pb-progress" style="position:fixed;inset-inline:0;top:0;height:3px;background:linear-gradient(90deg,#ec4899,#f472b6);transform:scaleX(0);transform-origin:left;transition:transform .2s ease;z-index:100000"></div>
 
-    @include('partials.header')
+    
     <div id="toast-container" aria-live="polite" aria-atomic="true" style="position:fixed;bottom:16px;right:16px;z-index:9999"></div>
 
     {{ $slot }}
-    @include('partials.footer')
+    
     @livewireScripts
 
 <script>
